@@ -7,6 +7,7 @@ import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { fadeInUp } from '../../utils/animations'
 import { useDialogue } from '../../hooks/useDialogue.tsx'
+import { MarkdownMessage } from './MarkdownMessage'
 import type { KnowledgePoint } from '../../types/knowledge'
 
 interface DialoguePanelProps {
@@ -84,14 +85,18 @@ export const DialoguePanel: React.FC<DialoguePanelProps> = ({ knowledgePoint }) 
             }`}
           >
             <div
-              className={`max-w-[80%] rounded-lg p-3 ${
+              className={`max-w-[80%] rounded-lg p-4 ${
                 message.sender === 'user'
                   ? 'bg-purple-500/20 text-white'
                   : 'glass text-white'
               }`}
             >
-              <p>{message.content}</p>
-              <p className="text-xs text-gray-400 mt-1">
+              {message.sender === 'user' ? (
+                <p className="text-gray-100">{message.content}</p>
+              ) : (
+                <MarkdownMessage content={message.content} />
+              )}
+              <p className="text-xs text-gray-400 mt-2">
                 {new Date(message.timestamp).toLocaleTimeString()}
               </p>
             </div>
